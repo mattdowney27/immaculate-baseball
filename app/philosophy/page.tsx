@@ -67,7 +67,7 @@ export default function PhilosophyPage() {
               body: [
                 'Great players know where the ball is going before it\'s hit.',
                 'We train defensive anticipation, pitch-by-pitch awareness, and offensive situational intelligence.',
-                'This discipline applies regardless of age or skill level.',
+                'This discipline applies regardless of experience or competition level.',
               ],
             },
           ].map((pillar) => (
@@ -119,8 +119,8 @@ export default function PhilosophyPage() {
               {
                 level: 'Level 01',
                 title: 'Fundamentals',
-                sub: 'Entry Level · All Ages',
-                desc: 'Throwing mechanics, catching, basic batting, and athletic positioning. Zero shortcuts. Every player — regardless of age — starts here and proves they can execute the basics correctly before moving on.',
+                sub: 'Entry Level · All Levels',
+                desc: 'Throwing mechanics, catching, basic batting, and athletic positioning. Zero shortcuts. Every player — regardless of experience — starts here and proves they can execute the basics correctly before moving on.',
               },
               {
                 level: 'Level 02',

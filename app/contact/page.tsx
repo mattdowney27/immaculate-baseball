@@ -118,7 +118,7 @@ export default function ContactPage() {
                   name="name"
                   className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition-shadow"
                   style={{ '--tw-ring-color': '#4b9cd3' } as React.CSSProperties}
-                  placeholder="Parent or guardian name"
+                  placeholder="Your name"
                 />
               </div>
 
@@ -205,11 +205,11 @@ export default function ContactPage() {
           <div className="space-y-6">
             {[
               {
-                q: 'What age groups does the academy serve?',
-                a: "We work with players of all ages. Placement is skill-based, not age-based. Every new player goes through an assessment to determine the right tier — whether that's Fundamentals, Developmental, or Advanced.",
+                q: 'Who does the academy train?',
+                a: "We train players at every level of development. Placement is skill-based — every new player is assessed and placed into the appropriate tier, whether that's Fundamentals, Developmental, or Advanced.",
               },
               {
-                q: 'My child has no prior baseball experience. Is that okay?',
+                q: 'I have no prior baseball experience. Is that okay?',
                 a: "Absolutely. Our Fundamentals program is designed precisely for this. Every player — regardless of experience — starts by learning and mastering proper mechanics. There are no shortcuts, and that's the point.",
               },
               {

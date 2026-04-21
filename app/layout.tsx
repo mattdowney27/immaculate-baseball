@@ -9,8 +9,8 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Immaculate Baseball Academy',
   description:
-    "South Florida's premier youth baseball development academy. Built on discipline, deliberate mechanics, and the relentless pursuit of mastery.",
-  keywords: 'baseball, youth baseball, baseball academy, South Florida, Weston, baseball training',
+    "South Florida's premier baseball development academy. Built on discipline, deliberate mechanics, and the relentless pursuit of mastery.",
+  keywords: 'baseball, baseball development, baseball academy, South Florida, Weston, baseball training',
 }
 
 export default function RootLayout({

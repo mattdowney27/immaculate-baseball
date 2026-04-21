@@ -375,7 +375,6 @@ export default function SummerCampClient() {
                     type="number"
                     required
                     min="5"
-                    max="18"
                     value={form.playerAge}
                     onChange={(e) => setForm({ ...form, playerAge: e.target.value })}
                     className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent"

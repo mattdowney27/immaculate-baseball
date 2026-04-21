@@ -14,7 +14,7 @@ export default function Footer() {
               <span className="font-bold text-white text-lg">Immaculate Baseball</span>
             </div>
             <p className="text-sm leading-relaxed text-gray-400">
-              South Florida&apos;s premier youth baseball development academy. Built on discipline,
+              South Florida&apos;s premier baseball development academy. Built on discipline,
               deliberate mechanics, and the relentless pursuit of mastery.
             </p>
           </div>

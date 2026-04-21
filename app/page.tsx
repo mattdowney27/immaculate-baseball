@@ -27,7 +27,7 @@ export default function HomePage() {
               <span style={{ color: '#4b9cd3' }}>Play Immaculate.</span>
             </h1>
             <p className="text-xl text-gray-300 mb-10 leading-relaxed max-w-2xl">
-              South Florida&apos;s premier youth baseball development academy. Built on discipline,
+              South Florida&apos;s premier baseball development academy. Built on discipline,
               deliberate mechanics, and the relentless pursuit of mastery — one rep at a time.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">

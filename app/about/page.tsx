@@ -20,12 +20,13 @@ export default function AboutPage() {
             About the Academy
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-5">
-            Where Champions Are Built
+            Where Baseball Players Are Made
           </h1>
           <p className="text-gray-300 text-lg max-w-2xl leading-relaxed">
-            Immaculate Baseball is not a rec league. It&apos;s not a casual baseball program. It is
-            a serious, focused development academy for players who want to be trained — not just
-            coached.
+            Immaculate Baseball is built around true player development. Every session is
+            intentional, focused, and driven by the work required to improve. Our players show up
+            ready to train with purpose, understanding that mastery comes from consistent,
+            disciplined repetition.
           </p>
         </div>
       </section>
@@ -50,7 +51,7 @@ export default function AboutPage() {
             </p>
             <p className="text-gray-600 leading-relaxed mb-5">
               Every player who walks through our doors is assessed, placed at the right skill tier,
-              and challenged at the edge of their ability. No one gets a pass because of their age.
+              and challenged at the edge of their ability. No exceptions. No shortcuts.
               No one advances without earning it.
             </p>
             <p className="text-gray-600 leading-relaxed">
@@ -64,7 +65,7 @@ export default function AboutPage() {
             {[
               {
                 title: 'Skill-Based Placement',
-                desc: "Every new player is assessed and placed into the appropriate tier — regardless of age. Advancement is earned, not handed out.",
+                desc: "Every new player is assessed and placed into the appropriate tier based on skill alone. Advancement is earned, not handed out.",
               },
               {
                 title: 'Premium Indoor Facility',
@@ -120,7 +121,7 @@ export default function AboutPage() {
               },
               {
                 title: 'Pitching Mounds',
-                desc: 'Regulation mounds for bullpen work across all age-group heights.',
+                desc: 'Regulation mounds for bullpen work at all standard pitching heights.',
               },
               {
                 title: 'Infield Training Zone',
