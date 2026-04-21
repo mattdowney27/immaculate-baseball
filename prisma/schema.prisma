@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CampWeek {
+  id        String   @id @default(cuid())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  price     Int
+  maxSpots  Int
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  registrations RegistrationCampWeek[]
+}
+
+model Registration {
+  id              String             @id @default(cuid())
+  parentName      String
+  parentEmail     String
+  parentPhone     String
+  playerName      String
+  playerAge       Int
+  status          RegistrationStatus @default(PENDING)
+  stripeSessionId String?
+  notes           String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  campWeeks RegistrationCampWeek[]
+}
+
+model RegistrationCampWeek {
+  id             String @id @default(cuid())
+  registrationId String
+  campWeekId     String
+
+  registration Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+  campWeek     CampWeek     @relation(fields: [campWeekId], references: [id])
+
+  @@unique([registrationId, campWeekId])
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+enum RegistrationStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
