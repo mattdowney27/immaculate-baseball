@@ -27,6 +27,11 @@ function formatPrice(cents: number) {
   return `$${(cents / 100).toFixed(0)}`
 }
 
+function getDayRange(endDateStr: string) {
+  const day = new Date(endDateStr).getUTCDay()
+  return day === 4 ? '(Mon–Thu)' : '(Mon–Fri)'
+}
+
 function CancelledBanner() {
   const searchParams = useSearchParams()
   if (searchParams.get('cancelled') !== 'true') return null
@@ -172,6 +177,9 @@ export default function SummerCampClient() {
 
   const selectedWeekDetails = campWeeks.filter((w) => selectedWeeks.includes(w.id))
 
+  const showSpotsRemaining = campWeeks.length > 0 &&
+    campWeeks.every((w) => (w.maxSpots - w.spotsRemaining) >= 10)
+
   const inputClass =
     'w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent'
 
@@ -267,11 +275,13 @@ export default function SummerCampClient() {
                             )}
                           </div>
                           <div className="text-sm text-gray-500">
-                            {formatDate(week.startDate)} – {formatDate(week.endDate)}, 2026
+                            {formatDate(week.startDate)} – {formatDate(week.endDate)}, 2026 {getDayRange(week.endDate)}
                           </div>
-                          <div className="text-xs text-gray-400 mt-1">
-                            {week.spotsRemaining} of {week.maxSpots} spots remaining
-                          </div>
+                          {showSpotsRemaining && (
+                            <div className="text-xs text-gray-400 mt-1">
+                              {week.spotsRemaining} of {week.maxSpots} spots remaining
+                            </div>
+                          )}
                         </div>
                         <div className="flex items-center gap-3 flex-shrink-0">
                           <span className="font-bold text-gray-900 text-lg">
@@ -335,9 +345,9 @@ export default function SummerCampClient() {
                 <span className="font-semibold text-gray-900">Your Selected Weeks</span>
                 <button
                   onClick={() => setStep('select')}
-                  className="text-xs font-medium text-gray-500 hover:text-gray-700"
+                  className="text-sm font-bold text-gray-700 hover:text-gray-900"
                 >
-                  ← Change
+                  Change
                 </button>
               </div>
               <ul className="space-y-1 mb-3">
@@ -391,7 +401,7 @@ export default function SummerCampClient() {
                         value={form.parentPhone}
                         onChange={(e) => setForm({ ...form, parentPhone: e.target.value })}
                         className={inputClass}
-                        placeholder="(555) 000-0000"
+                        placeholder="(954) 555-1234"
                       />
                     </div>
                   </div>
@@ -609,6 +619,16 @@ export default function SummerCampClient() {
                 <p className="text-xs text-gray-400 text-center mt-3">
                   You will be redirected to Stripe&apos;s secure checkout page to complete payment.
                 </p>
+                <div className="text-center mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setStep('select')}
+                    className="text-sm underline hover:opacity-70"
+                    style={{ color: '#4b9cd3' }}
+                  >
+                    Change Week Selection
+                  </button>
+                </div>
               </div>
             </form>
           </div>

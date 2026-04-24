@@ -18,17 +18,16 @@ async function main() {
   })
   console.log(`Admin user: ${admin.email}`)
 
-  // Create camp weeks — summer 2026, Monday–Friday
+  // Create camp weeks — summer 2026
   const campWeeks = [
-    { name: 'Week 1', startDate: new Date('2026-06-08'), endDate: new Date('2026-06-12'), price: 39900, maxSpots: 20 },
-    { name: 'Week 2', startDate: new Date('2026-06-15'), endDate: new Date('2026-06-19'), price: 39900, maxSpots: 20 },
-    { name: 'Week 3', startDate: new Date('2026-06-22'), endDate: new Date('2026-06-26'), price: 39900, maxSpots: 20 },
-    { name: 'Week 4', startDate: new Date('2026-06-29'), endDate: new Date('2026-07-03'), price: 39900, maxSpots: 20 },
-    { name: 'Week 5', startDate: new Date('2026-07-06'), endDate: new Date('2026-07-10'), price: 39900, maxSpots: 20 },
-    { name: 'Week 6', startDate: new Date('2026-07-13'), endDate: new Date('2026-07-17'), price: 39900, maxSpots: 20 },
-    { name: 'Week 7', startDate: new Date('2026-07-20'), endDate: new Date('2026-07-24'), price: 39900, maxSpots: 20 },
-    { name: 'Week 8', startDate: new Date('2026-07-27'), endDate: new Date('2026-07-31'), price: 39900, maxSpots: 20 },
-    { name: 'Week 9', startDate: new Date('2026-08-03'), endDate: new Date('2026-08-07'), price: 39900, maxSpots: 20 },
+    { name: 'Week 1', startDate: new Date('2026-06-08'), endDate: new Date('2026-06-12'), price: 35000, maxSpots: 30 },
+    { name: 'Week 2', startDate: new Date('2026-06-15'), endDate: new Date('2026-06-19'), price: 35000, maxSpots: 30 },
+    { name: 'Week 3', startDate: new Date('2026-06-22'), endDate: new Date('2026-06-26'), price: 35000, maxSpots: 30 },
+    { name: 'Week 4', startDate: new Date('2026-06-29'), endDate: new Date('2026-07-02'), price: 28000, maxSpots: 30 },
+    { name: 'Week 5', startDate: new Date('2026-07-06'), endDate: new Date('2026-07-10'), price: 35000, maxSpots: 30 },
+    { name: 'Week 6', startDate: new Date('2026-07-13'), endDate: new Date('2026-07-17'), price: 35000, maxSpots: 30 },
+    { name: 'Week 7', startDate: new Date('2026-07-20'), endDate: new Date('2026-07-24'), price: 35000, maxSpots: 30 },
+    { name: 'Week 8', startDate: new Date('2026-07-27'), endDate: new Date('2026-07-31'), price: 35000, maxSpots: 30 },
   ]
 
   for (const week of campWeeks) {
@@ -36,7 +35,11 @@ async function main() {
       where: {
         id: `seed-${week.name.toLowerCase().replace(' ', '-')}`,
       },
-      update: {},
+      update: {
+        price: week.price,
+        maxSpots: week.maxSpots,
+        endDate: week.endDate,
+      },
       create: {
         id: `seed-${week.name.toLowerCase().replace(' ', '-')}`,
         ...week,
