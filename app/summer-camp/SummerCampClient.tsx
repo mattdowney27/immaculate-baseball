@@ -415,82 +415,106 @@ export default function SummerCampClient() {
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Player Profile</h2>
                 <div className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Player Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={form.playerName}
-                      onChange={(e) => setForm({ ...form, playerName: e.target.value })}
-                      className={inputClass}
-                      placeholder="Player's full name"
-                    />
+                  {/* Row 1: Player Name | Date of Birth */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Player Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={form.playerName}
+                        onChange={(e) => setForm({ ...form, playerName: e.target.value })}
+                        className={inputClass}
+                        placeholder="Player's full name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Date of Birth <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        required
+                        max={new Date().toISOString().split('T')[0]}
+                        value={form.playerDob}
+                        onChange={(e) => setForm({ ...form, playerDob: e.target.value })}
+                        className={inputClass}
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Date of Birth <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      required
-                      max={new Date().toISOString().split('T')[0]}
-                      value={form.playerDob}
-                      onChange={(e) => setForm({ ...form, playerDob: e.target.value })}
-                      className={inputClass}
-                    />
+                  {/* Row 2: School | Grade */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        School <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={form.school}
+                        onChange={(e) => setForm({ ...form, school: e.target.value })}
+                        className={inputClass}
+                        placeholder="School name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Grade <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        required
+                        value={form.grade}
+                        onChange={(e) => setForm({ ...form, grade: e.target.value })}
+                        className={inputClass}
+                      >
+                        <option value="">Select grade</option>
+                        {GRADES.map((g) => (
+                          <option key={g} value={g}>{g}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Grade <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      required
-                      value={form.grade}
-                      onChange={(e) => setForm({ ...form, grade: e.target.value })}
-                      className={inputClass}
-                    >
-                      <option value="">Select grade</option>
-                      {GRADES.map((g) => (
-                        <option key={g} value={g}>{g}</option>
-                      ))}
-                    </select>
+                  {/* Row 3: Skill Level | Shirt Size */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Skill Level <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        required
+                        value={form.skillLevel}
+                        onChange={(e) => setForm({ ...form, skillLevel: e.target.value })}
+                        className={inputClass}
+                      >
+                        <option value="">Select skill level</option>
+                        {SKILL_LEVELS.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Shirt Size <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        required
+                        value={form.shirtSize}
+                        onChange={(e) => setForm({ ...form, shirtSize: e.target.value })}
+                        className={inputClass}
+                      >
+                        <option value="">Select size</option>
+                        {SHIRT_SIZES.map((s) => (
+                          <option key={s} value={s}>{s}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      School <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={form.school}
-                      onChange={(e) => setForm({ ...form, school: e.target.value })}
-                      className={inputClass}
-                      placeholder="School name"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Skill Level <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      required
-                      value={form.skillLevel}
-                      onChange={(e) => setForm({ ...form, skillLevel: e.target.value })}
-                      className={inputClass}
-                    >
-                      <option value="">Select skill level</option>
-                      {SKILL_LEVELS.map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))}
-                    </select>
-                  </div>
-
+                  {/* Row 4: Bats | Throws */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -570,22 +594,6 @@ export default function SummerCampClient() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                      Shirt Size <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      required
-                      value={form.shirtSize}
-                      onChange={(e) => setForm({ ...form, shirtSize: e.target.value })}
-                      className={inputClass}
-                    >
-                      <option value="">Select size</option>
-                      {SHIRT_SIZES.map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))}
-                    </select>
-                  </div>
                 </div>
               </div>
 
