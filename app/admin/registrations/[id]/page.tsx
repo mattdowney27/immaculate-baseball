@@ -73,7 +73,7 @@ export default async function RegistrationDetailPage({
             parentEmail: registration.parentEmail,
             parentPhone: registration.parentPhone,
             playerName: registration.playerName,
-            playerAge: registration.playerAge,
+            playerDob: registration.playerDob,
             status: registration.status,
             notes: registration.notes ?? '',
             stripeSessionId: registration.stripeSessionId ?? '',

@@ -26,7 +26,14 @@ model Registration {
   parentEmail     String
   parentPhone     String
   playerName      String
-  playerAge       Int
+  playerDob       String
+  grade           String
+  school          String
+  skillLevel      String
+  bat             String
+  throwHand       String
+  positions       String[]
+  shirtSize       String
   status          RegistrationStatus @default(PENDING)
   stripeSessionId String?
   notes           String?

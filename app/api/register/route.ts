@@ -4,10 +4,24 @@ import { prisma } from '@/lib/prisma'
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { parentName, parentEmail, parentPhone, playerName, playerAge, campWeekIds } = body
+    const {
+      parentName,
+      parentEmail,
+      parentPhone,
+      playerName,
+      playerDob,
+      grade,
+      school,
+      skillLevel,
+      bat,
+      throwHand,
+      positions,
+      shirtSize,
+      campWeekIds,
+    } = body
 
     // Validate required fields
-    if (!parentName || !parentEmail || !parentPhone || !playerName || !playerAge || !campWeekIds?.length) {
+    if (!parentName || !parentEmail || !parentPhone || !playerName || !playerDob || !campWeekIds?.length) {
       return NextResponse.json({ error: 'All fields are required' }, { status: 400 })
     }
 
@@ -50,7 +64,14 @@ export async function POST(req: NextRequest) {
         parentEmail,
         parentPhone,
         playerName,
-        playerAge: parseInt(playerAge),
+        playerDob,
+        grade,
+        school,
+        skillLevel,
+        bat,
+        throwHand,
+        positions,
+        shirtSize,
         status: 'PENDING',
         campWeeks: {
           create: campWeekIds.map((id: string) => ({ campWeekId: id })),

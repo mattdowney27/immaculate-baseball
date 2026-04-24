@@ -49,7 +49,7 @@ export default function SummerCampClient() {
     parentEmail: '',
     parentPhone: '',
     playerName: '',
-    playerAge: '',
+    playerDob: '',
   })
 
   useEffect(() => {
@@ -369,20 +369,17 @@ export default function SummerCampClient() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Player Age <span className="text-red-500">*</span>
+                    Date of Birth <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="number"
+                    type="date"
+                    max={new Date().toISOString().split('T')[0]}
                     required
-                    min="5"
-                    value={form.playerAge}
-                    onChange={(e) => setForm({ ...form, playerAge: e.target.value })}
+                    value={form.playerDob}
+                    onChange={(e) => setForm({ ...form, playerDob: e.target.value })}
                     className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                    placeholder="Age"
                   />
                 </div>
-              </div>
-
               <div className="pt-2">
                 <button
                   type="submit"
@@ -396,6 +393,7 @@ export default function SummerCampClient() {
                   You will be redirected to Stripe&apos;s secure checkout page to complete payment.
                 </p>
               </div>
+            </div>
             </form>
           </div>
         )}

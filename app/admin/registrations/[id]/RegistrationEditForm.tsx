@@ -22,7 +22,7 @@ interface RegistrationData {
   parentEmail: string
   parentPhone: string
   playerName: string
-  playerAge: number
+  playerDob: string
   status: string
   notes: string
   stripeSessionId: string
@@ -51,7 +51,7 @@ export default function RegistrationEditForm({ registration, allCampWeeks }: Pro
     parentEmail: registration.parentEmail,
     parentPhone: registration.parentPhone,
     playerName: registration.playerName,
-    playerAge: String(registration.playerAge),
+    playerDob: registration.playerDob,
     status: registration.status,
     notes: registration.notes,
   })
@@ -211,17 +211,15 @@ export default function RegistrationEditForm({ registration, allCampWeeks }: Pro
 
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">
-              Player Age
+              Date of Birth
             </label>
             <input
-              type="number"
-              min="5"
-              max="18"
-              value={form.playerAge}
-              onChange={(e) => setForm({ ...form, playerAge: e.target.value })}
+              type="date"
+              value={form.playerDob}
+              onChange={(e) => setForm({ ...form, playerDob: e.target.value })}
               className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
-          </div>
+          </div>      
 
           <div>
             <label className="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">

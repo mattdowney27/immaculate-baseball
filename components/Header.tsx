@@ -13,7 +13,7 @@ const NAV_LINKS = [
 ]
 
 const BLUE = '#4b9cd3'
-const HEADER_H = 64
+const HEADER_H = 68
 
 export default function Header() {
   const pathname = usePathname()
@@ -29,7 +29,6 @@ export default function Header() {
         backgroundColor: '#fff',
         borderBottom: '1px solid #f3f4f6',
         boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
-        pointerEvents: 'none',
       }}>
         <div style={{
           maxWidth: 1152,
@@ -42,25 +41,17 @@ export default function Header() {
         }}>
           <Link href="/" onClick={() => setOpen(false)}
             style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: '50%', backgroundColor: BLUE,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>
-              <span style={{ color: '#fff', fontWeight: 700, fontSize: 13 }}>IB</span>
-            </div>
-            <span style={{ fontWeight: 700, color: '#111827', fontSize: 18, letterSpacing: '-0.02em' }}>
-              Immaculate <span style={{ color: BLUE }}>Baseball</span>
-            </span>
+            <img src="/logo.png" alt="Immaculate Baseball" style={{ height: 60, width: 'auto', display: 'block' }} />
           </Link>
 
-          <nav className="ib-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <nav className="ib-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             {NAV_LINKS.map((link) => {
               const active = pathname === link.href
               return (
                 <Link key={link.href} href={link.href} style={{
-                  padding: '8px 16px', borderRadius: 6, fontSize: 14, fontWeight: 500,
+                  padding: '10px 18px', borderRadius: 8, fontSize: 15, fontWeight: 600,
                   textDecoration: 'none',
-                  color: active ? '#fff' : '#4b5563',
+                  color: active ? '#fff' : '#374151',
                   backgroundColor: active ? BLUE : 'transparent',
                 }}>
                   {link.label}

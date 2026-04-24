@@ -136,7 +136,7 @@ export default async function AdminDashboardPage({
                     <tr key={reg.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-5 py-4">
                         <div className="font-medium text-gray-900">{reg.playerName}</div>
-                        <div className="text-xs text-gray-400">Age {reg.playerAge}</div>
+                        <div className="text-xs text-gray-400">DOB {reg.playerDob}</div>
                       </td>
                       <td className="px-5 py-4">
                         <div className="text-gray-700">{reg.parentName}</div>
