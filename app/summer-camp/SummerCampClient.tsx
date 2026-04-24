@@ -345,7 +345,8 @@ export default function SummerCampClient() {
                 <span className="font-semibold text-gray-900">Your Selected Weeks</span>
                 <button
                   onClick={() => setStep('select')}
-                  className="text-sm font-bold text-gray-700 hover:text-gray-900"
+                  className="text-sm font-bold underline hover:opacity-70"
+                  style={{ color: '#4b9cd3' }}
                 >
                   Change
                 </button>
