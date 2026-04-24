@@ -37,6 +37,41 @@ function CancelledBanner() {
   )
 }
 
+const GRADES = ['3rd Grade', '4th Grade', '5th Grade', '6th Grade', '7th Grade']
+
+const SKILL_LEVELS = [
+  'Beginner (Aspiring Baseball Player)',
+  'Rec League (Coach Pitch)',
+  'Rec League (Minors)',
+  'Rec League (Majors)',
+  'Rec League (Age 13–15)',
+  'Travel Team (Coach Pitch)',
+  'Travel Team (AA)',
+  'Travel Team (AAA)',
+  'Travel Team (Majors)',
+]
+
+const POSITIONS = [
+  'Pitcher',
+  'Catcher',
+  'First Base',
+  'Second Base',
+  'Third Base',
+  'Shortstop',
+  'Left Field',
+  'Center Field',
+  'Right Field',
+]
+
+const SHIRT_SIZES = [
+  'Youth Small',
+  'Youth Medium',
+  'Youth Large',
+  'Adult Small',
+  'Adult Medium',
+  'Adult Large',
+]
+
 export default function SummerCampClient() {
   const [campWeeks, setCampWeeks] = useState<CampWeek[]>([])
   const [loading, setLoading] = useState(true)
@@ -50,6 +85,13 @@ export default function SummerCampClient() {
     parentPhone: '',
     playerName: '',
     playerDob: '',
+    grade: '',
+    school: '',
+    skillLevel: '',
+    bat: '',
+    throwHand: '',
+    positions: [] as string[],
+    shirtSize: '',
   })
 
   useEffect(() => {
@@ -68,6 +110,15 @@ export default function SummerCampClient() {
     )
   }
 
+  function togglePosition(pos: string) {
+    setForm((prev) => ({
+      ...prev,
+      positions: prev.positions.includes(pos)
+        ? prev.positions.filter((p) => p !== pos)
+        : [...prev.positions, pos],
+    }))
+  }
+
   function totalPrice() {
     return campWeeks
       .filter((w) => selectedWeeks.includes(w.id))
@@ -77,10 +128,15 @@ export default function SummerCampClient() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setFormError('')
+
+    if (form.positions.length === 0) {
+      setFormError('Please select at least one desired position.')
+      return
+    }
+
     setStep('submitting')
 
     try {
-      // Step 1: Create registration
       const regRes = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -94,7 +150,6 @@ export default function SummerCampClient() {
         return
       }
 
-      // Step 2: Create Stripe checkout session
       const stripeRes = await fetch('/api/stripe/create-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -108,7 +163,6 @@ export default function SummerCampClient() {
         return
       }
 
-      // Step 3: Redirect to Stripe
       window.location.href = stripeData.url
     } catch {
       setFormError('Something went wrong. Please try again.')
@@ -117,6 +171,9 @@ export default function SummerCampClient() {
   }
 
   const selectedWeekDetails = campWeeks.filter((w) => selectedWeeks.includes(w.id))
+
+  const inputClass =
+    'w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent'
 
   return (
     <div>
@@ -222,9 +279,7 @@ export default function SummerCampClient() {
                           </span>
                           <div
                             className={`w-5 h-5 rounded flex items-center justify-center border-2 transition-colors ${
-                              selected
-                                ? 'border-blue-400 text-white'
-                                : 'border-gray-300'
+                              selected ? 'border-blue-400 text-white' : 'border-gray-300'
                             }`}
                             style={selected ? { backgroundColor: '#4b9cd3', borderColor: '#4b9cd3' } : {}}
                           >
@@ -274,7 +329,7 @@ export default function SummerCampClient() {
 
         {(step === 'form' || step === 'submitting') && (
           <div className="max-w-2xl mx-auto">
-            {/* Summary */}
+            {/* Week summary */}
             <div className="border border-gray-100 rounded-xl p-6 bg-gray-50 mb-8">
               <div className="flex justify-between items-center mb-3">
                 <span className="font-semibold text-gray-900">Your Selected Weeks</span>
@@ -307,79 +362,233 @@ export default function SummerCampClient() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Player &amp; Parent Information</h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Parent Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.parentName}
-                    onChange={(e) => setForm({ ...form, parentName: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                    placeholder="Full name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Parent Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={form.parentEmail}
-                    onChange={(e) => setForm({ ...form, parentEmail: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
-
+            <form onSubmit={handleSubmit} className="space-y-10">
+              {/* Parent Information */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Parent Phone <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="tel"
-                  required
-                  value={form.parentPhone}
-                  onChange={(e) => setForm({ ...form, parentPhone: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                  placeholder="(555) 000-0000"
-                />
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Parent Information</h2>
+                <div className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Parent Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={form.parentName}
+                        onChange={(e) => setForm({ ...form, parentName: e.target.value })}
+                        className={inputClass}
+                        placeholder="Full name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Parent Phone <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={form.parentPhone}
+                        onChange={(e) => setForm({ ...form, parentPhone: e.target.value })}
+                        className={inputClass}
+                        placeholder="(555) 000-0000"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Parent Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={form.parentEmail}
+                      onChange={(e) => setForm({ ...form, parentEmail: e.target.value })}
+                      className={inputClass}
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Player Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.playerName}
-                    onChange={(e) => setForm({ ...form, playerName: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                    placeholder="Player's full name"
-                  />
+              {/* Player Profile */}
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Player Profile</h2>
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Player Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.playerName}
+                      onChange={(e) => setForm({ ...form, playerName: e.target.value })}
+                      className={inputClass}
+                      placeholder="Player's full name"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Date of Birth <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      max={new Date().toISOString().split('T')[0]}
+                      value={form.playerDob}
+                      onChange={(e) => setForm({ ...form, playerDob: e.target.value })}
+                      className={inputClass}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Grade <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      required
+                      value={form.grade}
+                      onChange={(e) => setForm({ ...form, grade: e.target.value })}
+                      className={inputClass}
+                    >
+                      <option value="">Select grade</option>
+                      {GRADES.map((g) => (
+                        <option key={g} value={g}>{g}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      School <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.school}
+                      onChange={(e) => setForm({ ...form, school: e.target.value })}
+                      className={inputClass}
+                      placeholder="School name"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Skill Level <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      required
+                      value={form.skillLevel}
+                      onChange={(e) => setForm({ ...form, skillLevel: e.target.value })}
+                      className={inputClass}
+                    >
+                      <option value="">Select skill level</option>
+                      {SKILL_LEVELS.map((s) => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Bats <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        required
+                        value={form.bat}
+                        onChange={(e) => setForm({ ...form, bat: e.target.value })}
+                        className={inputClass}
+                      >
+                        <option value="">Select</option>
+                        <option value="Right">Right</option>
+                        <option value="Left">Left</option>
+                        <option value="Switch">Switch</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                        Throws <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        required
+                        value={form.throwHand}
+                        onChange={(e) => setForm({ ...form, throwHand: e.target.value })}
+                        className={inputClass}
+                      >
+                        <option value="">Select</option>
+                        <option value="Right">Right</option>
+                        <option value="Left">Left</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Desired Positions <span className="text-red-500">*</span>
+                    </label>
+                    <p className="text-xs text-gray-400 mb-3">Select all that apply.</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {POSITIONS.map((pos) => {
+                        const checked = form.positions.includes(pos)
+                        return (
+                          <label
+                            key={pos}
+                            className={`flex items-center gap-2 border rounded-lg px-3 py-2.5 cursor-pointer transition-colors text-sm ${
+                              checked
+                                ? 'border-blue-400 bg-blue-50 text-gray-900'
+                                : 'border-gray-200 text-gray-700 hover:border-gray-300'
+                            }`}
+                            style={checked ? { borderColor: '#4b9cd3' } : {}}
+                          >
+                            <input
+                              type="checkbox"
+                              className="sr-only"
+                              checked={checked}
+                              onChange={() => togglePosition(pos)}
+                            />
+                            <span
+                              className="w-4 h-4 rounded border-2 flex-shrink-0 flex items-center justify-center"
+                              style={
+                                checked
+                                  ? { backgroundColor: '#4b9cd3', borderColor: '#4b9cd3' }
+                                  : { borderColor: '#d1d5db' }
+                              }
+                            >
+                              {checked && (
+                                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                              )}
+                            </span>
+                            {pos}
+                          </label>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      Shirt Size <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      required
+                      value={form.shirtSize}
+                      onChange={(e) => setForm({ ...form, shirtSize: e.target.value })}
+                      className={inputClass}
+                    >
+                      <option value="">Select size</option>
+                      {SHIRT_SIZES.map((s) => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                    Date of Birth <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    max={new Date().toISOString().split('T')[0]}
-                    required
-                    value={form.playerDob}
-                    onChange={(e) => setForm({ ...form, playerDob: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                  />
-                </div>
+              </div>
+
               <div className="pt-2">
                 <button
                   type="submit"
@@ -393,7 +602,6 @@ export default function SummerCampClient() {
                   You will be redirected to Stripe&apos;s secure checkout page to complete payment.
                 </p>
               </div>
-            </div>
             </form>
           </div>
         )}
