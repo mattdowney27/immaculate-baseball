@@ -70,22 +70,22 @@ export default function Header() {
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           style={{
-            width: 36,
-            height: 36,
+            width: 44,
+            height: 44,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: open ? '#f3f4f6' : '#fff',
-            border: '1px solid #e5e7eb',
-            borderRadius: 6,
+            backgroundColor: open ? '#fff' : '#4b9cd3',
+            border: open ? '1px solid #4b9cd3' : 'none',
+            borderRadius: 8,
             cursor: 'pointer',
-            color: '#9ca3af',
+            color: open ? '#4b9cd3' : '#fff',
             padding: 0,
             touchAction: 'manipulation',
             pointerEvents: 'auto',
           }}
         >
-          <svg width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2}
+          <svg width={22} height={22} fill="none" stroke="currentColor" strokeWidth={2}
             strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
             {open
               ? <path d="M6 18L18 6M6 6l12 12" />
